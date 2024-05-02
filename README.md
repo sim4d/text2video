@@ -11,9 +11,14 @@
 Windows WSL + Ubuntu 22.04.4 LTS，Python 3.10
 
 安装依赖
-bash
+
 ```python
 pip install -r requirements.txt
+```
+
+moviepy 还依赖 ImageMagick
+```bash
+sudo apt-get install imagemagick
 ```
 
 ## License: MIT
