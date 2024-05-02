@@ -12,7 +12,9 @@ Windows WSL + Ubuntu 22.04.4 LTS，Python 3.10
 
 安装依赖
 bash
+```python
 pip install -r requirements.txt
+```
 
 ## License: MIT
 本项目采用 MIT 许可证授权。
