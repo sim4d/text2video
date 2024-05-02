@@ -1,0 +1,7 @@
+requests
+edge-tts
+pillow
+moviepy
+webvtt-py
+ffmpeg-python
+bs4
