@@ -25,9 +25,10 @@ wsl -d rocky9
 
 升级系统，添加普通用户
 ```bash
+# dnf install epel-release
 # dnf update && dnf upgrade
+#
 # dnf install sudo
-
 # adduser wsl
 # passwd wsl
 # usermod -aG wheel wsl
