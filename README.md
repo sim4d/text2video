@@ -73,5 +73,29 @@ pip3 install -r requirements.txt
 python3 text2video.py
 ```
 
+## 其它问题
+同样的代码，用 WSL + Ubuntu，就会碰到以下问题。换成 Ubuntu 24.04 也一样。最后换成 Rocky 9.3 才行。
+
+```bash
+Traceback (most recent call last):
+  File "/home/wsl/sandbox/text2video/text2video.py", line 116, in <module>
+    main(url, font_path)
+  File "/home/wsl/sandbox/text2video/text2video.py", line 107, in main
+    generate_video(images_dir, audio_path, vtt_path, font_path, output_path, front_txt, title_txt)
+  File "/home/wsl/sandbox/text2video/text2video.py", line 36, in generate_video
+    front_clip = mp.TextClip(front_txt, color='black', bg_color='white', font=font_path, align='West', kerning=5, fontsize=18)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wsl/sandbox/text2video/my_venv/lib/python3.12/site-packages/moviepy/video/VideoClip.py", line 1146, in __init__
+    raise IOError(error)
+OSError: MoviePy Error: creation of None failed because of the following error:
+
+convert-im6.q16: attempt to perform an operation not allowed by the security policy `@/tmp/tmpn53ke08b.txt' @ error/property.c/InterpretImageProperties/3771.
+convert-im6.q16: label expected `@/tmp/tmpn53ke08b.txt' @ error/annotate.c/GetMultilineTypeMetrics/782.
+convert-im6.q16: no images defined `PNG32:/tmp/tmp3vlxrrq6.png' @ error/convert.c/ConvertImageCommand/3234.
+.
+
+.This error can be due to the fact that ImageMagick is not installed on your computer, or (for Windows users) that you didn't specify the path to the ImageMagick binary in file conf.py, or that the path you specified is incorrect
+```
+
 ## License: MIT
 本项目采用 MIT 许可证授权。
