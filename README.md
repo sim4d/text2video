@@ -14,7 +14,7 @@
 ## 开发环境
 Windows 11, WSL2 + Rocky 9.3，Python 3.12
 
-安装 Rocky Linux 9.3 for Windows Subsystem for Linux 2 (WSL2)
+安装 Rocky Linux 9.3 for Windows Subsystem for Linux 2 (WSL2), refer to [link](https://docs.rockylinux.org/guides/interoperability/import_rocky_to_wsl/)
 
 ```Windows PowerShell
 wget -Uri https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-Container-Base.latest.x86_64.tar.xz -OutFile ./Rocky-9-Container-Base.latest.x86_64.tar.xz
