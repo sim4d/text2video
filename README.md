@@ -45,6 +45,7 @@ wsl -d rocky9 -u wsl
 ```bash
 sudo dnf install python3-pip
 sudo dnf install ImageMagick
+sudo dnf install git ssh-keygen
 ```
 
 准备 sandbox (要求 pub key 已经在 GitHub 账户 Profile 设置好)
