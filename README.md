@@ -29,6 +29,7 @@ wsl -d rocky9
 # dnf install sudo
 
 # adduser wsl
+# passwd wsl
 # usermod -aG wheel wsl
 # exit
 ```
