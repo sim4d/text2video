@@ -21,13 +21,17 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     images.sort(key=lambda x: x.lower())
     print(images)
 
-    # add 1 more for front page
+    # add 1 more for front page: len(images) + 1
     image_duration = int(audio_duration / (len(images) + 1))
+    # add 1 second padding
+    image_duration = image_duration + 1
+    print(f"\naudio_duration: {audio_duration}")
+    print(f"\nimage_duration: {image_duration}")
 
     # specify the size of each frame (width, height)
     frame_size = (640, 480)
     height = frame_size[1]
-    up_position = height * 0.2
+    up_position = int(height * 0.2)
 
     clips = []
 
@@ -37,20 +41,20 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
 
     title_clip = mp.TextClip(title_txt, color='darkred', bg_color='white', font=font_path, align='West', kerning=5, fontsize=21)
 
-    txt_clip = mp.CompositeVideoClip([front_col, title_clip.set_pos('center')], size=frame_size).set_duration(image_duration)
+    # use half of image_duration for both front page and back page
+    txt_clip = mp.CompositeVideoClip([front_col, title_clip.set_position('center')], size=frame_size).set_duration(image_duration / 2)
     clips.append(txt_clip)
 
     # add images into clips
     for image_path in images:
         clip = mp.ImageClip(image_path)
-        clip = mp.CompositeVideoClip([clip.set_pos('center').set_duration(image_duration)], size=frame_size)
+        clip = mp.CompositeVideoClip([clip.set_position('center').set_duration(image_duration)], size=frame_size)
         clips.append(clip)
 
     # add back page
     clips.append(txt_clip)
 
-    video = mp.concatenate_videoclips(clips, method='compose')
-    video.set_position('center').set_duration(audio_duration)
+    video = mp.concatenate_videoclips(clips, method='compose').set_position('center').set_duration(audio_duration)
 
     # read the WebVTT file
     captions = webvtt.read(vtt_file)
@@ -63,14 +67,14 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     generator = lambda txt: mp.TextClip(txt, font=font_path, fontsize=21, color='white', bg_color='black')
 
     # calculate the 90% position from the bottom
-    bottom_position = height * 0.9
+    bottom_position = int(height * 0.9)
 
     # load your subtitles from SRT file
-    subtitle_clip = mps.SubtitlesClip(srt_file, generator).set_pos('center', bottom_position).set_duration(audio_duration)
+    subtitle_clip = mps.SubtitlesClip(srt_file, generator).set_position(('center', bottom_position)).set_duration(audio_duration)
 
-    vidio = mp.CompositeVideoClip([video, subtitle_clip], size=frame_size).set_duration(audio_duration + 1)
+    final_clip = mp.CompositeVideoClip([video, subtitle_clip], size=frame_size)
 
-    final_clip = video.set_audio(audio)
+    final_clip = final_clip.set_audio(audio)
     final_clip.write_videofile(output_path, fps=24, codec='libx264')
 
 
@@ -88,7 +92,7 @@ def main(url, font_path):
     title, pub_account = get_title(url)
     front_txt = f"文章内容来自微信公众号，版权属于原作者\n如喜欢内容，欢迎关注原公众号"
 
-    title_txt = f"公众号：{pub_account}\n标题：{title}"
+    title_txt = f"公众号：{pub_account}\n标  题：{title}"
 
     asyncio.run(speak_article(url, output_file=audio_path, vtt_file=vtt_path))
     if not os.path.isfile(audio_path):
@@ -106,7 +110,7 @@ def main(url, font_path):
     generate_video(images_dir, audio_path, vtt_path, font_path, output_path, front_txt, title_txt)
 
 
-font_path = "fonts/NotoSerifSC-Bold.otf"
+font_path = r'fonts/NotoSerifSC-Bold.otf'
 
 # set url
 url = 'https://mp.weixin.qq.com/s/t8c07-3gKjKXW4MOIwW5aQ'
