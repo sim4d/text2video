@@ -12,7 +12,7 @@
 - 实现以微信公众号文章为例，函数的具体查询是基于公众号文章的特点 (如 make_audio.py 里的 get_title / get_wechat_article 等函数)。若用于其它类型文章，可能需要调整查询的tag和class信息
 
 ## 开发环境
-Windows WSL + Ubuntu 24.04 LTS，Python 3.12
+Windows 11, WSL2 + Ubuntu 24.04 LTS，Python 3.12
 
 安装pip和ImageMagick
 
