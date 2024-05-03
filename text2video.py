@@ -17,8 +17,7 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     audio_duration = audio.duration
 
     # Load the images
-    #images = [os.path.join(images_dir, image) for image in os.listdir(images_dir) if image.endswith(('.png', '.jpg', '.jpeg'))]
-    images = [os.path.join(images_dir, image) for image in os.listdir(images_dir) if image.endswith(('.jpg', '.jpeg'))]
+    images = [os.path.join(images_dir, image) for image in os.listdir(images_dir) if image.endswith(('.png', '.jpg', '.jpeg'))]
     images.sort(key=lambda x: x.lower())
     print(images)
 
@@ -57,7 +56,7 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     captions = webvtt.read(vtt_file)
 
     # convert to SRT and save
-    srt_file = vtt_file + '.vtt'
+    srt_file = vtt_file + '.srt'
     captions.save_as_srt(srt_file)
 
     # define a lambda function that takes text and returns a TextClip
