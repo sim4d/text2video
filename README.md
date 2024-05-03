@@ -50,6 +50,7 @@ sudo dnf install ImageMagick
 准备 sandbox (要求 pub key 已经在 GitHub 账户 Profile 设置好)
 
 ```bash
+cd ~/
 mkdir sandbox
 cd sandbox
 git clone git@github.com:sim4dong/text2video.git text2video
