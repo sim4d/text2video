@@ -14,16 +14,50 @@
 ## 开发环境
 Windows 11, WSL2 + Ubuntu 24.04 LTS，Python 3.12
 
-安装pip和ImageMagick
+安装 Rocky Linux 9.3 for Windows Subsystem for Linux 2 (WSL2)
+
+```Windows PowerShell
+wget -Uri https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-Container-Base.latest.x86_64.tar.xz -OutFile ./Rocky-9-Container-Base.latest.x86_64.tar.xz
+mkdir wsl-rocky
+wsl --import rocky9 ./wsl-rocky .//Rocky-9-Container-Base.latest.x86_64.tar.xz --version 2
+wsl -d rocky9
+```
+
+升级系统，添加普通用户
+```bash
+# dnf update && dnf upgrade
+# dnf install sudo
+
+# adduser wsl
+# usermod -aG wheel wsl
+# exit
+```
+
+以普通用户进入 Rocky9
+```Windows PowerShell
+wsl -d rocky9 -u wsl
+```
+
+安装 pip 和 ImageMagick
 
 ```bash
-sudo apt install python3-pip
-sudo apt install imagemagick
+sudo dnf install python3-pip
+sudo dnf install imagemagick
 ```
+
+准备 sandbox (要求 pub key 已经在 GitHub 账户 Profile 设置好)
+
+```bash
+mkdir sandbox
+cd sandbox
+git clone git@github.com:sim4dong/text2video.git text2video
+```
+
 
 安装依赖
 
-```python
+```bash
+cd ~/sandbox/text2video
 python3 -m venv my_venv
 source ./my_venv/bin/activate
 pip3 install -r requirements.txt
