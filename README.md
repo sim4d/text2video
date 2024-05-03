@@ -96,8 +96,8 @@ convert-im6.q16: no images defined `PNG32:/tmp/tmp3vlxrrq6.png' @ error/convert.
 
 .This error can be due to the fact that ImageMagick is not installed on your computer, or (for Windows users) that you didn't specify the path to the ImageMagick binary in file conf.py, or that the path you specified is incorrect
 ```
-### 解决方案
-经过查询，好像这个 [link](https://www.toymoban.com/news/detail-486297.html) 碰到类似问题，并成功解决了。
+#### 解决方案
+这可能是 Windows + Python + ImageMagick 特有的问题，好像这个 [link](https://www.toymoban.com/news/detail-486297.html) 碰到类似问题，并成功解决了。
 
 ## License: MIT
 本项目采用 MIT 许可证授权。
