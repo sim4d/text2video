@@ -91,7 +91,7 @@ def main(url, font_path):
 
     title_txt = f"公众号：{pub_account}\n标题：{title}"
 
-    #asyncio.run(speak_article(url, output_file=audio_path, vtt_file=vtt_path))
+    asyncio.run(speak_article(url, output_file=audio_path, vtt_file=vtt_path))
     if not os.path.isfile(audio_path):
         raise FileNotFoundError(f"The file '{audio_path}' does not exist.")
 
@@ -99,9 +99,9 @@ def main(url, font_path):
         raise FileNotFoundError(f"The file '{vtt_path}' does not exist.")
 
     print("\n########## save_images ##########")
-    #saved_images = save_images(url, save_dir=images_dir)
-    #if not saved_images:
-    #    raise FileNotFoundError(f"No image in sub dir: '{images_dir}', please re-try.")
+    saved_images = save_images(url, save_dir=images_dir)
+    if not saved_images:
+        raise FileNotFoundError(f"No image in sub dir: '{images_dir}', please re-try.")
 
     print("\n########## generate_video ##########")
     generate_video(images_dir, audio_path, vtt_path, font_path, output_path, front_txt, title_txt)
