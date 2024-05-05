@@ -4,6 +4,7 @@ import webvtt
 import os
 import asyncio
 from datetime import datetime
+import argparse
 
 from make_audio import speak_article, get_title
 from save_image import save_images
@@ -116,6 +117,15 @@ font_path = r'fonts/NotoSerifSC-Bold.otf'
 url = 'https://mp.weixin.qq.com/s/t8c07-3gKjKXW4MOIwW5aQ'
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="A simple Text to Video conversion tool based on Pyhon libs.")
+    parser.add_argument("--url", help="Specify url info", action="store")
+
+    args = parser.parse_args()
+    if args.url:
+        url = args.url
+        print(f"\nCustomized url: {url}\n")
+
+
     main(url, font_path)
 
 
