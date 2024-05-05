@@ -1,6 +1,6 @@
 requests
 edge-tts
-pillow
+pillow=9.5.0
 moviepy
 webvtt-py
 ffmpeg-python
