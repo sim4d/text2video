@@ -31,7 +31,7 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
 
     # specify the size of each frame (width, height)
     frame_size = (640, 480)
-    height = frame_size[1]
+    width, height = frame_size
     up_position = int(height * 0.2)
 
     clips = []
@@ -49,8 +49,10 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     # add images into clips
     for image_path in images:
         clip = mp.ImageClip(image_path)
-        clip = mp.CompositeVideoClip([clip.set_position('center').set_duration(image_duration)], size=frame_size)
-        clips.append(clip)
+        image_ratio = min(width / clip.w, height / clip.h)
+        scaled_clip = clip.resize(height=int(clip.h * image_ratio))
+        image_clip = mp.CompositeVideoClip([scaled_clip.set_position('center').set_duration(image_duration)], size=frame_size)
+        clips.append(image_clip)
 
     # add back page
     clips.append(txt_clip)
@@ -103,6 +105,7 @@ def main(url, font_path):
         raise FileNotFoundError(f"The file '{vtt_path}' does not exist.")
 
     print("\n########## save_images ##########")
+    saved_images = True
     saved_images = save_images(url, save_dir=images_dir)
     if not saved_images:
         raise FileNotFoundError(f"No image in sub dir: '{images_dir}', please re-try.")
