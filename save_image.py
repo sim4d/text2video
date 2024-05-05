@@ -38,7 +38,7 @@ def save_images(url, save_dir="images"):
 
         # print(image_url)
         data_type = str(image.get('data-type'))
-        filename = str(iter) + "." + data_type
+        filename = f"{iter:03d}" + "." + data_type
         iter = iter + 1
 
         # download the image and save it
