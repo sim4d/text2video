@@ -54,7 +54,7 @@ sudo dnf install git vim
 cd ~/
 mkdir sandbox
 cd sandbox
-git clone git@github.com:sim4dong/text2video.git text2video
+git clone git@github.com:sim4d/text2video.git text2video
 ```
 
 
