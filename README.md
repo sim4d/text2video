@@ -99,5 +99,10 @@ convert-im6.q16: no images defined `PNG32:/tmp/tmp3vlxrrq6.png' @ error/convert.
 #### 解决方案
 这可能是 Windows + Python + ImageMagick 特有的问题，好像这个 [link](https://www.toymoban.com/news/detail-486297.html) 碰到类似问题，并成功解决了。
 
+## 扫描试用
+微信扫码
+
+![视频号](./VideoAccount.jpg)
+
 ## License: MIT
 本项目采用 MIT 许可证授权。
