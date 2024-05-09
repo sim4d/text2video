@@ -102,7 +102,7 @@ convert-im6.q16: no images defined `PNG32:/tmp/tmp3vlxrrq6.png' @ error/convert.
 ## 扫描试用
 微信扫码
 
-![视频号](./VideoAccount.jpg)
+<img class="image_resized" style="aspect-ratio:796/960;width:25%;" src="./VideoAccount.jpg" alt="视频号">
 
 ## License: MIT
 本项目采用 MIT 许可证授权。
