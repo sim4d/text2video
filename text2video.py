@@ -67,7 +67,7 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     captions.save_as_srt(srt_file)
 
     # define a lambda function that takes text and returns a TextClip
-    generator = lambda txt: mp.TextClip(txt, font=font_path, fontsize=21, color='white', bg_color='black')
+    generator = lambda txt: mp.TextClip(txt, font=font_path, fontsize=18, color='white', bg_color='black')
 
     # calculate the 90% position from the bottom
     bottom_position = int(height * 0.9)

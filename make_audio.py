@@ -1,7 +1,9 @@
 import asyncio
+import re
 import requests
 from bs4 import BeautifulSoup
-import edge_tts
+from edge_tts.communicate import Communicate
+from edge_tts.submaker import SubMaker
 
 # get title and account
 def get_title(url):
@@ -37,18 +39,21 @@ def get_wechat_article(url):
 # speak article
 async def speak_article(url, voice="zh-CN-YunjianNeural", output_file="test.mp3", vtt_file="test.vtt"):
     text = get_wechat_article(url)
+    # add \r\n for each Chinese sentence
+    modified_text = re.sub(r'(，|：|；|。|！|？|…)\s*', r'\1\r\n', text)
 
-    communicate = edge_tts.Communicate(text, voice)
-    submaker = edge_tts.SubMaker()
+    communicate = Communicate(modified_text, voice)
+    submaker = SubMaker()
     with open(output_file, "wb") as file:
         async for chunk in communicate.stream():
             if chunk["type"] == "audio":
                 file.write(chunk["data"])
-            elif chunk["type"] == "WordBoundary":
+            elif chunk["type"] == "SentenceBoundary":
                 submaker.create_sub((chunk["offset"], chunk["duration"]), chunk["text"])
 
     with open(vtt_file, "w", encoding="utf-8") as file:
-        file.write(submaker.generate_subs())
+        # one Chinese sentence as one word in edge_tts
+        file.write(submaker.generate_subs(words_in_cue=1))
 
 
 # change voice as needed
