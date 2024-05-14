@@ -9,6 +9,14 @@ import argparse
 from make_audio import speak_article, get_title
 from save_image import save_images
 
+# set url
+URL = 'https://mp.weixin.qq.com/s/t8c07-3gKjKXW4MOIwW5aQ'
+# use r-string for Windows compatibility
+FONT_PATH = r'fonts/NotoSerifSC-Bold.otf'
+# default voice
+VOICE = 'zh-CN-YunjianNeural'
+
+
 def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, front_txt, title_txt):
     """
     Generates a video from a directory of images, an audio file, and an SRT subtitle file.
@@ -67,13 +75,16 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     captions.save_as_srt(srt_file)
 
     # define a lambda function that takes text and returns a TextClip
-    generator = lambda txt: mp.TextClip(txt, font=font_path, fontsize=18, color='white', bg_color='black')
+    generator = lambda txt: mp.TextClip(txt, font=font_path, color='white', bg_color='black', method='caption',
+                        size=(min(len(txt) * 17, width * 0.8), 30 * (1 + int(len(txt) / 34)))
+                        )
 
-    # calculate the 90% position from the bottom
-    bottom_position = int(height * 0.9)
+    # calculate the position from the bottom
+    bottom_position = int(height * 0.8)
 
     # load your subtitles from SRT file
-    subtitle_clip = mps.SubtitlesClip(srt_file, generator).set_position(('center', bottom_position)).set_duration(audio_duration)
+    subtitle_clip = mps.SubtitlesClip(srt_file, generator).set_position(('center', bottom_position)).
+                        set_duration(audio_duration).set_opacity(0.75)
 
     final_clip = mp.CompositeVideoClip([video, subtitle_clip], size=frame_size)
 
@@ -81,7 +92,7 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     final_clip.write_videofile(output_path, fps=24, codec='libx264')
 
 
-def main(url, font_path):
+def main(url, font_path=FONT_PATH, voice=VOICE):
     # get date str
     date_str = datetime.now().strftime('%Y-%m-%d')
 
@@ -97,7 +108,7 @@ def main(url, font_path):
 
     title_txt = f"公众号：{pub_account}\n标  题：{title}"
 
-    asyncio.run(speak_article(url, output_file=audio_path, vtt_file=vtt_path))
+    asyncio.run(speak_article(url, voice=voice, output_file=audio_path, vtt_file=vtt_path))
     if not os.path.isfile(audio_path):
         raise FileNotFoundError(f"The file '{audio_path}' does not exist.")
 
@@ -114,21 +125,24 @@ def main(url, font_path):
     generate_video(images_dir, audio_path, vtt_path, font_path, output_path, front_txt, title_txt)
 
 
-font_path = r'fonts/NotoSerifSC-Bold.otf'
-
-# set url
-url = 'https://mp.weixin.qq.com/s/t8c07-3gKjKXW4MOIwW5aQ'
-
 if __name__ == "__main__":
+    url = URL
+    voice = VOICE
+
     parser = argparse.ArgumentParser(description="A simple Text to Video conversion tool based on Pyhon libs.")
     parser.add_argument("--url", help="Specify url info", action="store")
+    parser.add_argument("--voice", help="Specify voice info", action="store")
 
     args = parser.parse_args()
     if args.url:
         url = args.url
         print(f"\nCustomized url: {url}\n")
 
+    if args.voice:
+        voice = args.voice
+        print(f"\nCustomized voice: {voice}\n")
 
-    main(url, font_path)
+
+    main(url, voice=voice)
 
 

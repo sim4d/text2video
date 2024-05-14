@@ -39,8 +39,8 @@ def get_wechat_article(url):
 # speak article
 async def speak_article(url, voice="zh-CN-YunjianNeural", output_file="test.mp3", vtt_file="test.vtt"):
     text = get_wechat_article(url)
-    # add \r\n for each Chinese sentence
-    modified_text = re.sub(r'(，|：|；|。|！|？|…)\s*', r'\1\r\n', text)
+    # add \r\n for sentence break
+    modified_text = re.sub(r'(：|；|…)\s*', r'\1\r\n', text)
 
     communicate = Communicate(modified_text, voice)
     submaker = SubMaker()
@@ -58,7 +58,7 @@ async def speak_article(url, voice="zh-CN-YunjianNeural", output_file="test.mp3"
 
 # change voice as needed
 # voice = "zh-CN-XiaoyiNeural"
-voice = "zh-CN-YunjianNeural"
+# voice = "zh-CN-YunjianNeural"
 
 # main
 async def _main() -> None:
