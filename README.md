@@ -75,6 +75,7 @@ python3 text2video.py
 
 ## References
 - https://zulko.github.io/moviepy/ref/ref.html
+- https://github.com/rany2/edge-tts
 
 ## 其它问题
 ### 1. edge-tts 生成 vtt 字幕时，只能以词语为 Boundary
