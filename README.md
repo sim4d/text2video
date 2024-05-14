@@ -73,8 +73,45 @@ pip3 install -r requirements.txt
 python3 text2video.py
 ```
 
+## References
+- https://zulko.github.io/moviepy/ref/ref.html
+
 ## 其它问题
-同样的代码，用 WSL + Ubuntu，就会碰到以下问题。换成 Ubuntu 24.04 也一样。最后换成 Rocky 9.3 才行。
+### edge-tts 生成 vtt 字幕时，只能以词语为 Boundary
+做成视频后，字幕看起来就很乱。如图
+
+#### 解决方案
+把 edge-tts 项目导入进来，并打上patch，改为以句子为 Boundary
+
+Patch diff
+```bash
+$ diff -u communicate.py-original communicate.py
+--- communicate.py-original     2024-05-12 16:28:58.031623420 +0800
++++ communicate.py      2024-05-13 00:20:53.785773846 +0800
+@@ -331,7 +331,7 @@
+                 "Content-Type:application/json; charset=utf-8\r\n"
+                 "Path:speech.config\r\n\r\n"
+                 '{"context":{"synthesis":{"audio":{"metadataoptions":{'
+-                '"sentenceBoundaryEnabled":false,"wordBoundaryEnabled":true},'
++                '"sentenceBoundaryEnabled":true,"wordBoundaryEnabled":false},'
+                 '"outputFormat":"audio-24khz-48kbitrate-mono-mp3"'
+                 "}}}}\r\n"
+             )
+@@ -359,7 +359,7 @@
+         def parse_metadata() -> Dict[str, Any]:
+             for meta_obj in json.loads(data)["Metadata"]:
+                 meta_type = meta_obj["Type"]
+-                if meta_type == "WordBoundary":
++                if meta_type in ("WordBoundary", "SentenceBoundary"):
+                     current_offset = meta_obj["Data"]["Offset"] + offset_compensation
+                     current_duration = meta_obj["Data"]["Duration"]
+                     return {
+```
+
+新的字幕效果
+
+
+### 同样的代码，用 WSL + Ubuntu，就会碰到以下问题。换成 Ubuntu 24.04 也一样。最后换成 Rocky 9.3 才行。
 
 ```bash
 Traceback (most recent call last):
