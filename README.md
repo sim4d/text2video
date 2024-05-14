@@ -81,7 +81,7 @@ python3 text2video.py
 ### 1. edge-tts 生成 vtt 字幕时，只能以词语为 Boundary
 做成视频后，字幕看起来就很乱。如图
 
-<img class="image_resized" style="width:50%;" src="./WordBoundary.jpg" alt="WordBoundary.jpg">
+<img src="./WordBoundary.jpg" alt="WordBoundary.jpg" width="50%">
 
 
 #### 解决方案
@@ -114,7 +114,7 @@ $ diff -u communicate.py-original communicate.py
 
 新的字幕效果
 
-<img class="image_resized" style="width:50%;" src="./SentenceBoundary.jpg" alt="SentenceBoundary.jpg">
+<img src="./SentenceBoundary.jpg" alt="SentenceBoundary.jpg" width="50%">
 
 
 ### 2. 同样的代码，用 WSL + Ubuntu，就会碰到以下问题。换成 Ubuntu 24.04 也一样。最后换成 Rocky 9.3 才行。
@@ -145,7 +145,8 @@ convert-im6.q16: no images defined `PNG32:/tmp/tmp3vlxrrq6.png' @ error/convert.
 ## 扫描试用
 微信扫码
 
-<img class="image_resized" style="aspect-ratio:796/960;width:30%;" src="./VideoAccount.jpg" alt="视频号">
+<img src="./VideoAccount.jpg" alt="VideoAccount.jpg" width="50%">
+
 
 ## License: MIT
 本项目采用 MIT 许可证授权。
