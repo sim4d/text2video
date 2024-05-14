@@ -83,8 +83,7 @@ def generate_video(images_dir, audio_path, vtt_file, font_path, output_path, fro
     bottom_position = int(height * 0.8)
 
     # load your subtitles from SRT file
-    subtitle_clip = mps.SubtitlesClip(srt_file, generator).set_position(('center', bottom_position)).
-                        set_duration(audio_duration).set_opacity(0.75)
+    subtitle_clip = mps.SubtitlesClip(srt_file, generator).set_position(('center', bottom_position)).set_duration(audio_duration).set_opacity(0.75)
 
     final_clip = mp.CompositeVideoClip([video, subtitle_clip], size=frame_size)
 
